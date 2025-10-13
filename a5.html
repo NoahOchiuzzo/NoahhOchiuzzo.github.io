@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Assignment 5 Spirograph Canvas Project">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment 5 - Spirograph</title>
+  <style>
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .wrap{display:flex;flex-direction:column;height:100%}
+    header{padding:12px;background:#0b1220;color:#fff;display:flex;gap:12px;align-items:center}
+    header input,header label,header button{font-size:14px;padding:6px;border-radius:6px;border:1px solid rgba(0,0,0,0.1)}
+    header input[type="number"]{width:80px}
+    header .spacer{flex:1}
+    canvas{flex:1;display:block;background:#fff}
+    .note{color:#ddd;font-size:12px}
+    @media (max-width:600px){header{flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <label>R <input id="R" type="number" value="150" min="10" max="1000"></label>
+      <label>r <input id="r" type="number" value="60" min="1" max="1000"></label>
+      <label>O <input id="O" type="number" value="50" min="0" max="1000"></label>
+      <label>step <input id="step" type="number" value="0.02" step="0.01" min="0.001" max="1"></label>
+      <label><input id="random" type="checkbox"> randomize</label>
+      <button id="start">Start</button>
+      <div class="spacer"></div>
+      <div class="note">Ensure r ≤ R</div>
+    </header>
+    <canvas id="c"></canvas>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+    let W, H, cx, cy;
+    function resize(){W = canvas.width = innerWidth; H = canvas.height = innerHeight - document.querySelector('header').offsetHeight; cx = W/2; cy = H/2;}
+    addEventListener('resize', resize);
+    resize();
+    let animId = null;
+    let t = 0;
+    let R = 150, r = 60, O = 50, step = 0.02;
+    let lastX = null, lastY = null;
+    let hue = 0;
+    let running = false;
+    function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+    function pickParams(){
+      if(document.getElementById('random').checked){
+        R = randInt(80, Math.min(400, Math.floor(Math.min(W,H)/2 - 20)));
+        r = randInt(10, Math.max(10, Math.floor(R*0.9)));
+        O = randInt(0, Math.floor(r));
+        document.getElementById('R').value = R;
+        document.getElementById('r').value = r;
+        document.getElementById('O').value = O;
+      } else {
+        R = Number(document.getElementById('R').value);
+        r = Number(document.getElementById('r').value);
+        O = Number(document.getElementById('O').value);
+      }
+      step = Number(document.getElementById('step').value) || 0.02;
+      if(!(R>0 && r>0 && O>=0)){
+        alert('Values must be positive numbers.');
+        return false;
+      }
+      if(r > R){
+        alert('r cannot be greater than R.');
+        return false;
+      }
+      return true;
+    }
+    function getPos(t){
+      const big = R + r;
+      const k = big / r;
+      const x = big * Math.cos(t) - (r + O) * Math.cos(k * t);
+      const y = big * Math.sin(t) - (r + O) * Math.sin(k * t);
+      return {x,y};
+    }
+    function clearCanvas(){
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0,0,W,H);
+    }
+    function startDrawing(){
+      if(!pickParams()) return;
+      running = true;
+      t = 0;
+      lastX = null;
+      lastY = null;
+      hue = Math.floor(Math.random()*360);
+      clearCanvas();
+      ctx.lineWidth = 1.2;
+      animate();
+    }
+    function stopDrawing(){
+      running = false;
+      if(animId) cancelAnimationFrame(animId);
+      animId = null;
+    }
+    function animate(){
+      animId = requestAnimationFrame(animate);
+      for(let i=0;i<5;i++){
+        const p = getPos(t);
+        const x = cx + p.x;
+        const y = cy + p.y;
+        if(lastX === null){
+          lastX = x;
+          lastY = y;
+        } else {
+          ctx.beginPath();
+          ctx.moveTo(lastX, lastY);
+          ctx.lineTo(x, y);
+          ctx.strokeStyle = `hsl(${hue},80%,45%)`;
+          ctx.stroke();
+          lastX = x;
+          lastY = y;
+        }
+        t += step;
+        hue += 0.15;
+      }
+      if(t > Math.PI * 2000) stopDrawing();
+    }
+    document.getElementById('start').addEventListener('click', function(){
+      if(running){
+        stopDrawing();
+        this.textContent = 'Start';
+      } else {
+        startDrawing();
+        this.textContent = 'Stop';
+      }
+    });
+    document.getElementById('R').addEventListener('input', ()=>{document.getElementById('random').checked = false;});
+    document.getElementById('r').addEventListener('input', ()=>{document.getElementById('random').checked = false;});
+    document.getElementById('O').addEventListener('input', ()=>{document.getElementById('random').checked = false;});
+    clearCanvas();
+  </script>
+</body>
+</html>
