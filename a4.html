@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projectile Motion Calculator</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    input {
+      margin: 5px 0;
+      width: 80px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    canvas {
+      margin-top: 20px;
+      max-width: 100%;
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <h3>Projectile Motion Calculator & Plot</h3>
+
+  <label>Initial Velocity (v₀):</label>
+  <input type="text" id="v0" value="30"> m/s <br>
+
+  <label>Launch Angle (θ):</label>
+  <input type="text" id="theta" value="45"> degrees <br>
+
+  <label>Xmin:</label>
+  <input type="text" id="xmin" value="0"><br>
+
+  <label>Xmax:</label>
+  <input type="text" id="xmax" value="100"><br>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <canvas id="myChart"></canvas>
+
+  <script>
+    function calculate() {
+      let v0 = parseFloat(document.getElementById("v0").value);
+      let thetaDeg = parseFloat(document.getElementById("theta").value);
+      let xmin = parseInt(document.getElementById("xmin").value);
+      let xmax = parseInt(document.getElementById("xmax").value);
+
+      let g = 9.8; 
+      let theta = thetaDeg * Math.PI / 180; 
+      let xVals = [];
+      let yVals = [];
+
+      for (let x = xmin; x <= xmax; x++) {
+        let y = x * Math.tan(theta) - (g * x * x) / (2 * v0 * v0 * Math.cos(theta) * Math.cos(theta));
+        if (y >= 0) {  
+          xVals.push(x);
+          yVals.push(y);
+        }
+      }
+
+      new Chart(document.getElementById("myChart"), {
+        type: 'line',
+        data: {
+          labels: xVals,
+          datasets: [{
+            label: 'Projectile Path',
+            data: yVals,
+            borderColor: 'blue',
+            fill: false,
+            tension: 0.1
+          }]
+        },
+        options: {
+          scales: {
+            x: { title: { display: true, text: 'Distance (m)' } },
+            y: { title: { display: true, text: 'Height (m)' } }
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
