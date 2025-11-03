@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Assignment 9 - Animation for COP4813">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment 9 - Animation</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      text-align: center;
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+    }
+
+    canvas {
+      border: 2px solid #333;
+      background-color: white;
+      margin-top: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li>
+        <a href="assignments.html">My Assignments</a>
+        <ul>
+          <li><a href="assignment1.html">Assignment 1</a></li>
+          <li><a href="assignments.html">Assignment 2</a></li>
+          <li><a href="a4.html">Assignment 4</a></li>
+          <li><a href="a5.html">Assignment 5</a></li>
+          <li><a href="cards.html">Assignment 6</a></li>
+          <li><a href="a9.html">Assignment 9</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">My Classes</a>
+        <ul>
+          <li><a href="https://class.daytonastate.edu/d2l/home/487729" target="_blank">COP4813</a></li>
+          <li><a href="https://class.daytonastate.edu/d2l/home/485745" target="_blank">COP4708</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">My Favorite Sites</a>
+        <ul>
+          <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a></li>
+          <li><a href="https://developer.mozilla.org/" target="_blank">MDN Docs</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Assignment 9 – Animation</h1>
+    <p>This assignment demonstrates JavaScript animation and event handling.</p>
+  </header>
+
+  <main>
+    <canvas id="myCanvas" width="500" height="400"></canvas>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 My Website | COP4813 Assignment 9</p>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let ball = {
+      x: 50,
+      y: 50,
+      radius: 20,
+      dx: 3,
+      dy: 2,
+      color: randomColor()
+    };
+
+    function drawBall() {
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.fillStyle = ball.color;
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function update() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBall();
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+      if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+        ball.dx = -ball.dx;
+      }
+      if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+        ball.dy = -ball.dy;
+      }
+      requestAnimationFrame(update);
+    }
+
+    function randomColor() {
+      return `hsl(${Math.random() * 360}, 70%, 50%)`;
+    }
+
+    canvas.addEventListener("click", function (event) {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+      const distance = Math.sqrt((mouseX - ball.x) ** 2 + (mouseY - ball.y) ** 2);
+      if (distance < ball.radius) {
+        ball.dx = -ball.dx;
+        ball.dy = -ball.dy;
+        ball.color = randomColor();
+      }
+    });
+
+    update();
+  </script>
+</body>
+</html>
