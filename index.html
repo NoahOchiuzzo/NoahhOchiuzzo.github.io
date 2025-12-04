@@ -6,6 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My COP4813 Website</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Additional styles for the advisor */
+    .course-item {
+      margin-bottom: 10px;
+    }
+    .course-item input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    #advisor-notes {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #eef;
+      border-left: 4px solid #339;
+    }
+  </style>
 </head>
 
 <body>
@@ -58,11 +73,19 @@
       <p>Hello! I am a student in COP4813. This site will act as both a project portfolio and a mini-resume where I can demonstrate HTML, CSS, and JavaScript skills. Over time, I will add links to all my assignments here.</p>
     </section>
 
-    <!-- NEW LIGHTHOUSE SECTION -->
+    <!-- Lighthouse section -->
     <section>
       <h2>Lighthouse Mobile Audit</h2>
       <img src="images/lighthouse.png" alt="Lighthouse performance screenshot" class="lighthouse-img">
       <p>This screenshot shows the Lighthouse report results for my mobile-friendly home page.</p>
+    </section>
+
+    <!-- Class Advisor Section -->
+    <section id="advisor-section">
+      <h2>Class Advising Tool</h2>
+      <p>Select the classes you have already completed to see what you can take next.</p>
+      <div id="advisor-container"></div>
+      <div id="advisor-notes"></div>
     </section>
   </main>
 
@@ -70,10 +93,83 @@
     <p>&copy; 2025 My Website | Designed for COP4813</p>
   </footer>
 
+  <!-- Existing menu toggle script -->
   <script>
     function toggleMenu() {
       document.querySelector(".nav-links").classList.toggle("active");
     }
+  </script>
+
+  <!-- Class Advising Tool Script -->
+  <script>
+    // JSON data for the courses
+    const courses = [
+      { code: "COP2001", name: "Programming I", prereqs: [], note: "" },
+      { code: "COP2800", name: "Intro to Computer Science", prereqs: [], note: "" },
+      { code: "COP3001", name: "Programming II", prereqs: [["COP2001","COP2800"]], note: "You must complete either COP2001 or COP2800 before taking this course." },
+      { code: "COP3501", name: "Data Structures", prereqs: ["COP3001"], note: "" }
+    ];
+
+    const container = document.getElementById("advisor-container");
+    const notesDiv = document.getElementById("advisor-notes");
+    let completed = [];
+
+    function renderCourses() {
+      container.innerHTML = "";
+      courses.forEach(course => {
+        const div = document.createElement("div");
+        div.className = "course-item";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = course.code;
+        checkbox.value = course.code;
+        checkbox.checked = completed.includes(course.code);
+        if (!canTake(course)) checkbox.disabled = true;
+
+        checkbox.addEventListener("change", (e) => {
+          if (e.target.checked) completed.push(course.code);
+          else completed = completed.filter(c => c !== course.code);
+          renderCourses();
+          renderNotes();
+        });
+
+        const label = document.createElement("label");
+        label.htmlFor = course.code;
+        label.innerText = `${course.code} - ${course.name}`;
+
+        div.appendChild(checkbox);
+        div.appendChild(label);
+        container.appendChild(div);
+      });
+    }
+
+    function canTake(course) {
+      if (completed.includes(course.code)) return true;
+      for (const prereq of course.prereqs) {
+        if (Array.isArray(prereq)) {
+          if (!prereq.some(p => completed.includes(p))) return false;
+        } else {
+          if (!completed.includes(prereq)) return false;
+        }
+      }
+      return true;
+    }
+
+    function renderNotes() {
+      notesDiv.innerHTML = "";
+      courses.forEach(course => {
+        if (course.note && !completed.includes(course.code)) {
+          const p = document.createElement("p");
+          p.innerText = course.note;
+          notesDiv.appendChild(p);
+        }
+      });
+    }
+
+    // Initial render
+    renderCourses();
+    renderNotes();
   </script>
 
 </body>
