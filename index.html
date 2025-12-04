@@ -213,45 +213,84 @@
 
   <!-- CMS Table Script -->
   <script>
-    fetch('cms.json')
-      .then(response => response.json())
-      .then(data => {
-        const tbody = document.querySelector("#cms-table tbody");
-        data.forEach(cms => {
-          const row = document.createElement("tr");
+  const cmsData = [
+  {
+    "name": "WordPress",
+    "support": "Open Source, Supported by most hosting companies",
+    "technology": "PHP/MySQL",
+    "capabilities": "Supports themes, Supports plugins, Public API",
+    "limitations": "Security depends on plugins, Needs frequent updates",
+    "example": "https://wordpress.org/"
+  },
+  {
+    "name": "Joomla",
+    "support": "Open Source",
+    "technology": "PHP/MySQL",
+    "capabilities": "Extensible via extensions, Multilingual support, Template system",
+    "limitations": "Steeper learning curve, Security issues if not updated",
+    "example": "https://www.joomla.org/"
+  },
+  {
+    "name": "Drupal",
+    "support": "Open Source",
+    "technology": "PHP/MySQL",
+    "capabilities": "Highly customizable, Strong user permissions, Large community modules",
+    "limitations": "Complex setup, Requires technical knowledge",
+    "example": "https://www.drupal.org/"
+  },
+  {
+    "name": "Magento",
+    "support": "Adobe (Open Source & Enterprise)",
+    "technology": "PHP/MySQL",
+    "capabilities": "E-commerce platform, Customizable templates, Payment integrations",
+    "limitations": "High server requirements, Steep learning curve",
+    "example": "https://magento.com/"
+  },
+  {
+    "name": "Squarespace",
+    "support": "Proprietary",
+    "technology": "Cloud-based",
+    "capabilities": "Drag-and-drop editor, Hosting included, Templates provided",
+    "limitations": "Limited customization, Monthly subscription cost",
+    "example": "https://www.squarespace.com/"
+  }
+];
 
-          const nameCell = document.createElement("td");
-          nameCell.textContent = cms.name;
-          row.appendChild(nameCell);
+const tbody = document.querySelector("#cms-table tbody");
+cmsData.forEach(cms => {
+  const row = document.createElement("tr");
 
-          const supportCell = document.createElement("td");
-          supportCell.textContent = cms.support;
-          row.appendChild(supportCell);
+  const nameCell = document.createElement("td");
+  nameCell.textContent = cms.name;
+  row.appendChild(nameCell);
 
-          const techCell = document.createElement("td");
-          techCell.textContent = cms.technology;
-          row.appendChild(techCell);
+  const supportCell = document.createElement("td");
+  supportCell.textContent = cms.support;
+  row.appendChild(supportCell);
 
-          const capCell = document.createElement("td");
-          capCell.textContent = cms.capabilities;
-          row.appendChild(capCell);
+  const techCell = document.createElement("td");
+  techCell.textContent = cms.technology;
+  row.appendChild(techCell);
 
-          const limitCell = document.createElement("td");
-          limitCell.textContent = cms.limitations;
-          row.appendChild(limitCell);
+  const capCell = document.createElement("td");
+  capCell.textContent = cms.capabilities;
+  row.appendChild(capCell);
 
-          const exampleCell = document.createElement("td");
-          const link = document.createElement("a");
-          link.href = cms.example;
-          link.target = "_blank";
-          link.textContent = cms.example;
-          exampleCell.appendChild(link);
-          row.appendChild(exampleCell);
+  const limitCell = document.createElement("td");
+  limitCell.textContent = cms.limitations;
+  row.appendChild(limitCell);
 
-          tbody.appendChild(row);
-        });
-      })
-      .catch(error => console.error("Error loading CMS data:", error));
+  const exampleCell = document.createElement("td");
+  const link = document.createElement("a");
+  link.href = cms.example;
+  link.target = "_blank";
+  link.textContent = cms.example;
+  exampleCell.appendChild(link);
+  row.appendChild(exampleCell);
+
+  tbody.appendChild(row);
+});
+
   </script>
 
 </body>
