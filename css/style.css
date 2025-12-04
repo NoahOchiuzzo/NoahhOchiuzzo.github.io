@@ -7,10 +7,23 @@ body {
   color: #333;
 }
 
+/* MOBILE MENU TOGGLE */
+.menu-toggle {
+  display: none;
+  font-size: 32px;
+  padding: 15px;
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+
 /* Navigation Menu */
+nav {
+  background: #333;
+}
+
 nav ul {
   list-style: none;
-  background: #333;
   padding: 0;
   margin: 0;
   display: flex;
@@ -20,7 +33,7 @@ nav ul li {
   position: relative;
 }
 
-nav ul li a {
+nav a {
   display: block;
   padding: 15px 20px;
   color: white;
@@ -31,20 +44,18 @@ nav ul li:hover {
   background: #555;
 }
 
+/* Dropdowns */
 nav ul li ul {
   display: none;
   position: absolute;
   background: #444;
   padding: 0;
   margin: 0;
+  width: 200px;
 }
 
 nav ul li:hover ul {
   display: block;
-}
-
-nav ul li ul li {
-  width: 200px;
 }
 
 /* Header */
@@ -61,8 +72,11 @@ main {
 }
 
 img {
+  width: 100%;
+  max-width: 250px;
   border-radius: 10px;
   margin: 10px 0;
+  display: block;
 }
 
 /* Footer */
@@ -72,4 +86,37 @@ footer {
   background: #333;
   color: white;
   margin-top: 20px;
+}
+
+/* ---------- MOBILE RESPONSIVE RULES ---------- */
+@media (max-width: 768px) {
+
+  /* Show hamburger menu */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Stack links vertically */
+  nav ul {
+    flex-direction: column;
+    display: none;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  /* Dropdowns open on tap */
+  nav ul li ul {
+    position: static;
+  }
+
+  nav ul li:hover ul {
+    display: none; /* disable hover dropdown on mobile */
+  }
+
+  nav ul li:active ul,
+  nav ul li:focus-within ul {
+    display: block; /* open submenu with touch */
+  }
 }
