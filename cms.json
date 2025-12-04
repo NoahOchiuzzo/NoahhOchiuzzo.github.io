@@ -1,1 +1,43 @@
 
+[
+  {
+    "name": "WordPress",
+    "support": "Open Source, Supported by most hosting companies",
+    "technology": "PHP/MySQL",
+    "capabilities": "Supports themes, Supports plugins, Public API",
+    "limitations": "Security depends on plugins, Needs frequent updates",
+    "example": "https://wordpress.org/"
+  },
+  {
+    "name": "Joomla",
+    "support": "Open Source",
+    "technology": "PHP/MySQL",
+    "capabilities": "Extensible via extensions, Multilingual support, Template system",
+    "limitations": "Steeper learning curve, Security issues if not updated",
+    "example": "https://www.joomla.org/"
+  },
+  {
+    "name": "Drupal",
+    "support": "Open Source",
+    "technology": "PHP/MySQL",
+    "capabilities": "Highly customizable, Strong user permissions, Large community modules",
+    "limitations": "Complex setup, Requires technical knowledge",
+    "example": "https://www.drupal.org/"
+  },
+  {
+    "name": "Magento",
+    "support": "Adobe (Open Source & Enterprise)",
+    "technology": "PHP/MySQL",
+    "capabilities": "E-commerce platform, Customizable templates, Payment integrations",
+    "limitations": "High server requirements, Steep learning curve",
+    "example": "https://magento.com/"
+  },
+  {
+    "name": "Squarespace",
+    "support": "Proprietary",
+    "technology": "Cloud-based",
+    "capabilities": "Drag-and-drop editor, Hosting included, Templates provided",
+    "limitations": "Limited customization, Monthly subscription cost",
+    "example": "https://www.squarespace.com/"
+  }
+]
