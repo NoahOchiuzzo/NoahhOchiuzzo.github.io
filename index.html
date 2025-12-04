@@ -20,6 +20,24 @@
       background-color: #eef;
       border-left: 4px solid #339;
     }
+
+    /* Styles for CMS Table */
+    #cms-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    #cms-table th, #cms-table td {
+      padding: 8px;
+      text-align: left;
+    }
+    #cms-table th {
+      background-color: #0066cc;
+      color: white;
+    }
+    #cms-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
   </style>
 </head>
 
@@ -67,6 +85,7 @@
   </header>
 
   <main>
+    <!-- About Me -->
     <section>
       <h2>About Me</h2>
       <img src="images/me.jpg" alt="A representative picture of me">
@@ -87,22 +106,43 @@
       <div id="advisor-container"></div>
       <div id="advisor-notes"></div>
     </section>
+
+    <!-- CMS Table Section -->
+    <section id="cms-section">
+      <h2>Content Management Systems</h2>
+      <p>Below is a table of CMS platforms including their capabilities and limitations.</p>
+      <table id="cms-table" border="1">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Support</th>
+            <th>Technology</th>
+            <th>Capabilities</th>
+            <th>Limitations</th>
+            <th>Example Site</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Table rows will be generated here -->
+        </tbody>
+      </table>
+    </section>
+
   </main>
 
   <footer>
     <p>&copy; 2025 My Website | Designed for COP4813</p>
   </footer>
 
-  <!-- Existing menu toggle script -->
+  <!-- Menu toggle -->
   <script>
     function toggleMenu() {
       document.querySelector(".nav-links").classList.toggle("active");
     }
   </script>
 
-  <!-- Class Advising Tool Script -->
+  <!-- Class Advising Tool -->
   <script>
-    // JSON data for the courses
     const courses = [
       { code: "COP2001", name: "Programming I", prereqs: [], note: "" },
       { code: "COP2800", name: "Intro to Computer Science", prereqs: [], note: "" },
@@ -167,9 +207,51 @@
       });
     }
 
-    // Initial render
     renderCourses();
     renderNotes();
+  </script>
+
+  <!-- CMS Table Script -->
+  <script>
+    fetch('cms.json')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.querySelector("#cms-table tbody");
+        data.forEach(cms => {
+          const row = document.createElement("tr");
+
+          const nameCell = document.createElement("td");
+          nameCell.textContent = cms.name;
+          row.appendChild(nameCell);
+
+          const supportCell = document.createElement("td");
+          supportCell.textContent = cms.support;
+          row.appendChild(supportCell);
+
+          const techCell = document.createElement("td");
+          techCell.textContent = cms.technology;
+          row.appendChild(techCell);
+
+          const capCell = document.createElement("td");
+          capCell.textContent = cms.capabilities;
+          row.appendChild(capCell);
+
+          const limitCell = document.createElement("td");
+          limitCell.textContent = cms.limitations;
+          row.appendChild(limitCell);
+
+          const exampleCell = document.createElement("td");
+          const link = document.createElement("a");
+          link.href = cms.example;
+          link.target = "_blank";
+          link.textContent = cms.example;
+          exampleCell.appendChild(link);
+          row.appendChild(exampleCell);
+
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => console.error("Error loading CMS data:", error));
   </script>
 
 </body>
