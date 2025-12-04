@@ -7,24 +7,28 @@
   <title>My COP4813 Website</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <!-- Navigation Menu -->
+
+ 
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+
   <nav aria-label="Main menu">
-    <ul>
+    <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-  <li>
-  <a href="assignments.html">My Assignments</a>
-  <ul>
-    <li><a href="assignment1.html">Assignment 1</a></li>
-    <li><a href="assignments.html">Assignment 2</a></li>
-    <li><a href="a4.html">Assignment 4</a></li>
-    <li><a href="a5.html">Assignment 5</a></li>
-    <li><a href="cards.html">Assignment 6</a></li>
-    <li><a href="a9.html">Assignment 9</a></li>
-  </ul>
-</li>
 
-
+      <li>
+        <a href="assignments.html">My Assignments</a>
+        <ul>
+          <li><a href="assignment1.html">Assignment 1</a></li>
+          <li><a href="assignments.html">Assignment 2</a></li>
+          <li><a href="a4.html">Assignment 4</a></li>
+          <li><a href="a5.html">Assignment 5</a></li>
+          <li><a href="cards.html">Assignment 6</a></li>
+          <li><a href="a9.html">Assignment 9</a></li>
+        </ul>
+      </li>
 
       <li>
         <a href="#">My Classes</a>
@@ -33,6 +37,7 @@
           <li><a href="https://class.daytonastate.edu/d2l/home/485745" target="_blank">COP4708</a></li>
         </ul>
       </li>
+
       <li>
         <a href="#">My Favorite Sites</a>
         <ul>
@@ -43,17 +48,17 @@
     </ul>
   </nav>
 
-  <!-- Header Section -->
+
   <header>
     <h1>Welcome to My COP4813 Website</h1>
     <p>This site is for demonstrating my web programming skills throughout the semester.</p>
   </header>
 
-  <!-- Main Content -->
+
   <main>
     <section>
       <h2>About Me</h2>
-      <img src="images/me.jpg" alt="A representative picture of me" width="250">
+      <img src="images/me.jpg" alt="A representative picture of me">
       <p>Hello! I am a student in COP4813. This site will act as both a project portfolio and a mini-resume where I can demonstrate HTML, CSS, and JavaScript skills. Over time, I will add links to all my assignments here.</p>
     </section>
   </main>
@@ -61,5 +66,12 @@
   <footer>
     <p>&copy; 2025 My Website | Designed for COP4813</p>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector(".nav-links").classList.toggle("active");
+    }
+  </script>
+
 </body>
 </html>
