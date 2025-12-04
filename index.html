@@ -7,7 +7,7 @@
   <title>My COP4813 Website</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Additional styles for the advisor */
+    /* Additional styles for advisor and CMS table */
     .course-item {
       margin-bottom: 10px;
     }
@@ -20,14 +20,13 @@
       background-color: #eef;
       border-left: 4px solid #339;
     }
-
-    /* Styles for CMS Table */
     #cms-table {
-      width: 100%;
+      margin-top: 20px;
       border-collapse: collapse;
-      margin-top: 10px;
+      width: 100%;
     }
     #cms-table th, #cms-table td {
+      border: 1px solid #333;
       padding: 8px;
       text-align: left;
     }
@@ -35,8 +34,9 @@
       background-color: #0066cc;
       color: white;
     }
-    #cms-table tr:nth-child(even) {
-      background-color: #f2f2f2;
+    #cms-table a {
+      color: #0066cc;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -48,7 +48,6 @@
   <nav aria-label="Main menu">
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-
       <li>
         <a href="assignments.html">My Assignments</a>
         <ul>
@@ -60,7 +59,6 @@
           <li><a href="a9.html">Assignment 9</a></li>
         </ul>
       </li>
-
       <li>
         <a href="#">My Classes</a>
         <ul>
@@ -68,7 +66,6 @@
           <li><a href="https://class.daytonastate.edu/d2l/home/485745" target="_blank">COP4708</a></li>
         </ul>
       </li>
-
       <li>
         <a href="#">My Favorite Sites</a>
         <ul>
@@ -85,7 +82,7 @@
   </header>
 
   <main>
-    <!-- About Me -->
+    <!-- About Me Section -->
     <section>
       <h2>About Me</h2>
       <img src="images/me.jpg" alt="A representative picture of me">
@@ -110,8 +107,7 @@
     <!-- CMS Table Section -->
     <section id="cms-section">
       <h2>Content Management Systems</h2>
-      <p>Below is a table of CMS platforms including their capabilities and limitations.</p>
-      <table id="cms-table" border="1">
+      <table id="cms-table" border="1" cellspacing="0" cellpadding="5">
         <thead>
           <tr>
             <th>Name</th>
@@ -123,7 +119,7 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Table rows will be generated here -->
+          <!-- Rows will be dynamically added here -->
         </tbody>
       </table>
     </section>
@@ -134,14 +130,14 @@
     <p>&copy; 2025 My Website | Designed for COP4813</p>
   </footer>
 
-  <!-- Menu toggle -->
+  <!-- Existing menu toggle script -->
   <script>
     function toggleMenu() {
       document.querySelector(".nav-links").classList.toggle("active");
     }
   </script>
 
-  <!-- Class Advising Tool -->
+  <!-- Class Advising Tool Script -->
   <script>
     const courses = [
       { code: "COP2001", name: "Programming I", prereqs: [], note: "" },
@@ -149,11 +145,9 @@
       { code: "COP3001", name: "Programming II", prereqs: [["COP2001","COP2800"]], note: "You must complete either COP2001 or COP2800 before taking this course." },
       { code: "COP3501", name: "Data Structures", prereqs: ["COP3001"], note: "" }
     ];
-
     const container = document.getElementById("advisor-container");
     const notesDiv = document.getElementById("advisor-notes");
     let completed = [];
-
     function renderCourses() {
       container.innerHTML = "";
       courses.forEach(course => {
@@ -183,7 +177,6 @@
         container.appendChild(div);
       });
     }
-
     function canTake(course) {
       if (completed.includes(course.code)) return true;
       for (const prereq of course.prereqs) {
@@ -195,7 +188,6 @@
       }
       return true;
     }
-
     function renderNotes() {
       notesDiv.innerHTML = "";
       courses.forEach(course => {
@@ -206,91 +198,89 @@
         }
       });
     }
-
     renderCourses();
     renderNotes();
   </script>
 
-  <!-- CMS Table Script -->
+  <!-- CMS Table Script (embedded JSON version) -->
   <script>
-  const cmsData = [
-  {
-    "name": "WordPress",
-    "support": "Open Source, Supported by most hosting companies",
-    "technology": "PHP/MySQL",
-    "capabilities": "Supports themes, Supports plugins, Public API",
-    "limitations": "Security depends on plugins, Needs frequent updates",
-    "example": "https://wordpress.org/"
-  },
-  {
-    "name": "Joomla",
-    "support": "Open Source",
-    "technology": "PHP/MySQL",
-    "capabilities": "Extensible via extensions, Multilingual support, Template system",
-    "limitations": "Steeper learning curve, Security issues if not updated",
-    "example": "https://www.joomla.org/"
-  },
-  {
-    "name": "Drupal",
-    "support": "Open Source",
-    "technology": "PHP/MySQL",
-    "capabilities": "Highly customizable, Strong user permissions, Large community modules",
-    "limitations": "Complex setup, Requires technical knowledge",
-    "example": "https://www.drupal.org/"
-  },
-  {
-    "name": "Magento",
-    "support": "Adobe (Open Source & Enterprise)",
-    "technology": "PHP/MySQL",
-    "capabilities": "E-commerce platform, Customizable templates, Payment integrations",
-    "limitations": "High server requirements, Steep learning curve",
-    "example": "https://magento.com/"
-  },
-  {
-    "name": "Squarespace",
-    "support": "Proprietary",
-    "technology": "Cloud-based",
-    "capabilities": "Drag-and-drop editor, Hosting included, Templates provided",
-    "limitations": "Limited customization, Monthly subscription cost",
-    "example": "https://www.squarespace.com/"
-  }
-];
+    const cmsData = [
+      {
+        "name": "WordPress",
+        "support": "Open Source, Supported by most hosting companies",
+        "technology": "PHP/MySQL",
+        "capabilities": "Supports themes, Supports plugins, Public API",
+        "limitations": "Security depends on plugins, Needs frequent updates",
+        "example": "https://wordpress.org/"
+      },
+      {
+        "name": "Joomla",
+        "support": "Open Source",
+        "technology": "PHP/MySQL",
+        "capabilities": "Extensible via extensions, Multilingual support, Template system",
+        "limitations": "Steeper learning curve, Security issues if not updated",
+        "example": "https://www.joomla.org/"
+      },
+      {
+        "name": "Drupal",
+        "support": "Open Source",
+        "technology": "PHP/MySQL",
+        "capabilities": "Highly customizable, Strong user permissions, Large community modules",
+        "limitations": "Complex setup, Requires technical knowledge",
+        "example": "https://www.drupal.org/"
+      },
+      {
+        "name": "Magento",
+        "support": "Adobe (Open Source & Enterprise)",
+        "technology": "PHP/MySQL",
+        "capabilities": "E-commerce platform, Customizable templates, Payment integrations",
+        "limitations": "High server requirements, Steep learning curve",
+        "example": "https://magento.com/"
+      },
+      {
+        "name": "Squarespace",
+        "support": "Proprietary",
+        "technology": "Cloud-based",
+        "capabilities": "Drag-and-drop editor, Hosting included, Templates provided",
+        "limitations": "Limited customization, Monthly subscription cost",
+        "example": "https://www.squarespace.com/"
+      }
+    ];
 
-const tbody = document.querySelector("#cms-table tbody");
-cmsData.forEach(cms => {
-  const row = document.createElement("tr");
+    const tbody = document.querySelector("#cms-table tbody");
+    cmsData.forEach(cms => {
+      const row = document.createElement("tr");
 
-  const nameCell = document.createElement("td");
-  nameCell.textContent = cms.name;
-  row.appendChild(nameCell);
+      const nameCell = document.createElement("td");
+      nameCell.textContent = cms.name;
+      row.appendChild(nameCell);
 
-  const supportCell = document.createElement("td");
-  supportCell.textContent = cms.support;
-  row.appendChild(supportCell);
+      const supportCell = document.createElement("td");
+      supportCell.textContent = cms.support;
+      row.appendChild(supportCell);
 
-  const techCell = document.createElement("td");
-  techCell.textContent = cms.technology;
-  row.appendChild(techCell);
+      const techCell = document.createElement("td");
+      techCell.textContent = cms.technology;
+      row.appendChild(techCell);
 
-  const capCell = document.createElement("td");
-  capCell.textContent = cms.capabilities;
-  row.appendChild(capCell);
+      const capCell = document.createElement("td");
+      capCell.textContent = cms.capabilities;
+      row.appendChild(capCell);
 
-  const limitCell = document.createElement("td");
-  limitCell.textContent = cms.limitations;
-  row.appendChild(limitCell);
+      const limitCell = document.createElement("td");
+      limitCell.textContent = cms.limitations;
+      row.appendChild(limitCell);
 
-  const exampleCell = document.createElement("td");
-  const link = document.createElement("a");
-  link.href = cms.example;
-  link.target = "_blank";
-  link.textContent = cms.example;
-  exampleCell.appendChild(link);
-  row.appendChild(exampleCell);
+      const exampleCell = document.createElement("td");
+      const link = document.createElement("a");
+      link.href = cms.example;
+      link.target = "_blank";
+      link.textContent = cms.example;
+      exampleCell.appendChild(link);
+      row.appendChild(exampleCell);
 
-  tbody.appendChild(row);
-});
-
+      tbody.appendChild(row);
+    });
   </script>
 
 </body>
